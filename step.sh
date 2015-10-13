@@ -7,8 +7,11 @@ cat << task
 
 task
 (rm -rf bin && mkdir bin) || exit
-echo '(nothing to compile yet)'
+mkdir bin/com.greetings
 set -x
+
+javac -d bin/com.greetings \
+    $(find src/com.greetings -name '*.java') || exit
 
 find bin -type f
 
@@ -30,5 +33,8 @@ cat << task
     Run
 
 task
-echo '(nothing to run yet)'
 set -x
+
+java \
+    -classpath bin/com.greetings \
+    com.greetings.Main
