@@ -7,10 +7,15 @@ cat << task
 
 task
 (rm -rf bin && mkdir bin) || exit
+mkdir bin/com.socket
 mkdir bin/com.greetings
 set -x
 
+javac -d bin/com.socket \
+    $(find src/com.socket -name '*.java') || exit
+
 javac -d bin/com.greetings \
+    -modulepath bin \
     $(find src/com.greetings -name '*.java') || exit
 
 find bin -type f
@@ -24,6 +29,11 @@ cat << task
 task
 (rm -rf lib && mkdir lib) || exit
 set -x
+
+jar --create --archive=lib/com.socket.jar \
+    -C bin/com.socket . || exit
+
+jar --print-module-descriptor --archive=lib/com.socket.jar || exit
 
 jar --create --archive=lib/com.greetings.jar \
     --main-class=com.greetings.Main \
