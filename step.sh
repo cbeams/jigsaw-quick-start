@@ -9,6 +9,7 @@ task
 (rm -rf bin && mkdir bin) || exit
 mkdir bin/com.socket
 mkdir bin/com.greetings
+mkdir bin/org.fastsocket
 set -x
 
 javac -d bin/com.socket \
@@ -17,6 +18,10 @@ javac -d bin/com.socket \
 javac -d bin/com.greetings \
     --module-path bin \
     $(find src/com.greetings -name '*.java') || exit
+
+javac -d bin/org.fastsocket \
+    --module-path bin \
+    $(find src/org.fastsocket -name '*.java') || exit
 
 find bin -type f
 
@@ -40,6 +45,11 @@ jar --create --file=lib/com.greetings.jar \
     -C bin/com.greetings . || exit
 
 jar --print-module-descriptor --file=lib/com.greetings.jar || exit
+
+jar --create --file=lib/org.fastsocket.jar \
+    -C bin/org.fastsocket . || exit
+
+jar --print-module-descriptor --file=lib/org.fastsocket.jar || exit
 
 
 set +x
