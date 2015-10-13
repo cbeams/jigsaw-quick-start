@@ -23,8 +23,13 @@ cat << task
 
 task
 (rm -rf lib && mkdir lib) || exit
-echo '(nothing to assemble yet)'
 set -x
+
+jar --create --file=lib/com.greetings.jar \
+    --main-class=com.greetings.Main \
+    -C bin/com.greetings . || exit
+
+jar --print-module-descriptor --file=lib/com.greetings.jar || exit
 
 
 set +x
@@ -36,5 +41,5 @@ task
 set -x
 
 java \
-    -modulepath bin \
-    -m com.greetings/com.greetings.Main
+    -modulepath lib \
+    -m com.greetings
