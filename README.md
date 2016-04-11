@@ -20,21 +20,22 @@ Then set up these two `git` aliases:
 
 The first alias, `git steps` shows you an overview of each step in the guide:
 
-	$ git steps
-	b78eb99 (tag: step0) Introduce com.greetings package and main class
-	4826e81 (tag: step1) Transform com.greetings source into a Java module
-	cb1cc8f (tag: step2) Assemble com.greetings into executable modular jar
-	5c652c1 (tag: step3) Introduce org.astro module dependency
-	5a0e223 (tag: step4) Remove requires statement and fail at compile time
-	3d0346a (tag: step5) Remove exports statement and fail at compile time
-	a39456b (tag: step6) Introduce SPI without provider and fail at runtime
-	90ea23e (tag: step7) Introduce service provider and bind successfully
+    $ git steps
+    c7facdc (tag: step0) Introduce com.greetings package and main class
+    b4dbc1a (tag: step1) Transform com.greetings source into a Java module
+    7f62b33 (tag: step2) Assemble com.greetings into executable modular jar
+    f131a70 (tag: step3) Introduce org.astro module dependency
+    bdb74ae (tag: step4) Remove requires statement and fail at compile time
+    cccaaab (tag: step5) Remove exports statement and fail at compile time
+    96cff2b Revert introduction of the org.astro module
+    7b3c7d1 (tag: step6) Introduce SPI without provider and fail at runtime
+    a5db24c (tag: step7) Introduce service provider and bind successfully
 
 The second alias, `git read` displays the log of each commit, in order, including both comment and patch. This allows you to see exactly what changes in each step and why:
 
 ```diff
 $ git read
-commit b78eb99a458645368e4324ba22867edce62440e4 (tag: step0)
+commit c7facdca5d51370ef6a6df8725279eaec3c872d2 (tag: step0)
 Author: Chris Beams <chris@gradle.com>
 Date:   Tue Oct 13 16:09:44 2015 +0200
 
@@ -94,7 +95,7 @@ index 59bf8a3..b20a0fe 100755
 +    -classpath bin/com.greetings \
 +    com.greetings.Main
 
-commit 4826e81531342ad9a423bd5196ffd69a633f5235 (tag: step1)
+commit b4dbc1ab8cc23dc64aabdf6e79cb491ba6546407 (tag: step1)
 Author: Chris Beams <chris@gradle.com>
 Date:   Thu Oct 8 16:12:50 2015 +0200
 
@@ -146,21 +147,21 @@ index b20a0fe..37b0c9f 100755
 
 The [step.sh](step.sh) script is present at each step in the guide, and you can run it to see Jigsaw in action.
 
-To do this, you'll first need a [JDK 9 early access build that includes project Jigsaw](https://jdk9.java.net/jigsaw/). Build 81 or better will work.
+To do this, you'll first need a [JDK 9 early access build that includes project Jigsaw](https://jdk9.java.net/jigsaw/). Build 111 or better will work.
 
 Once properly installed, `java -version` should tell you something like this:
 
-	$ java -version
-	java version "1.9.0-ea"
-	Java(TM) SE Runtime Environment (build 1.9.0-ea-jigsaw-nightly-h3391-20150915-b81)
-	Java HotSpot(TM) 64-Bit Server VM (build 1.9.0-ea-jigsaw-nightly-h3391-20150915-b81, mixed mode)
+    $ java -version
+    java version "9-ea"
+    Java(TM) SE Runtime Environment (build 9-ea+111-2016-03-30-170352.javare.4768.nc)
+    Java HotSpot(TM) 64-Bit Server VM (build 9-ea+111-2016-03-30-170352.javare.4768.nc, mixed mode)
 
 At this point you're ready to run through each step using the following commands:
 
  1. Check out a step
-	```
-	$ git checkout step0
-	```
+    ```
+    $ git checkout step0
+    ```
 
  2. Read the commit to understand what's changed
     ```
@@ -177,6 +178,6 @@ then repeat for each of the remaining steps
     $ git checkout step1
     $ git show
     $ ./step.sh
-	...
+    ...
 
 and remember to use `git steps` as a table of contents if you want to jump around.
